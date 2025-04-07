@@ -4,7 +4,7 @@ import UsersList from './components/UsersList'
 const App = () => {
   return (
     <div>
-      <h1>User List</h1>
+      <h1>User List Page</h1>
       <UsersList />
     </div>
   )

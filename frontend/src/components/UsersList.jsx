@@ -23,10 +23,10 @@ const UsersList = () => {
 
     return (
         <div>
-            <h1>Users List</h1>
+            <h2>Users List</h2>
             <ul>
                 {users.map(user => (
-                    <li key={user.id}>{user.name}</li>
+                    <li key={user.id}>{user.username}</li>
                 ))}
             </ul>
         </div>
