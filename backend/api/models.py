@@ -30,7 +30,7 @@ class UsersFavourites(models.Model):
     class Meta:
         unique_together = ('user', 'idea')
 
-class Users_Gallery(models.Model):
+class UsersGallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, null=True, blank=True)
