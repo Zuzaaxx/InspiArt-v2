@@ -21,3 +21,21 @@ class Idea(models.Model):
 
     def __str__(self):
         return self.picture.name
+
+
+class UsersFavourites(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'idea')
+
+class Users_Gallery(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return self.title
