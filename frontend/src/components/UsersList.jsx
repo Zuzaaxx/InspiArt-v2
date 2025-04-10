@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
@@ -8,23 +9,23 @@ const UsersList = () => {
     const fetchUsers = () => {
         setLoading(true);
         fetch('http://127.0.0.1:8000/api/users/')
-        .then(response => response.json())
-        .then(data => {
-            setUsers(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            setError(error);
-            setLoading(false);
-        });
+            .then(response => response.json())
+            .then(data => {
+                setUsers(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
     };
 
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    if(loading) return <p>Loading...</p>;
-    if(error) return <p>Error: {error.message}</p>;
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div>
@@ -34,7 +35,11 @@ const UsersList = () => {
             </button>
             <ul>
                 {users.map(user => (
-                    <li key={user.id}>{user.username}</li>
+                    <li key={user.id}>
+                        <Link to={`/users-list/${user.id}`}>
+                            {user.username} (ID: {user.id})
+                        </Link>
+                    </li>
                 ))}
             </ul>
         </div>
