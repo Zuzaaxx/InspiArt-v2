@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import UsersList from './components/UsersList'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UsersList from './components/UsersList';
 
 const App = () => {
   return (
     <div>
-      <h1>User List Page</h1>
       <UsersList />
     </div>
   )
