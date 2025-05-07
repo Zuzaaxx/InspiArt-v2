@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
-from rest_framework import status
-from .models import User
-from .serializers import UserSerializer
-from .serializers import UserSerializer
+from rest_framework.decorators import api_view, action
+from rest_framework import viewsets,status
+from .models import User, Categories, Idea
+from .serializers import UserSerializer, CategoriesSerializer, IdeaSerializer
 from django.http import HttpResponse
 from django.http import JsonResponse
+import random
 
 # Create your views here.
 @api_view(['GET'])
@@ -28,8 +28,8 @@ def test_users(request, id):
     }
     return JsonResponse(sample_data)
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the api index.")
+#def index(request):
+#    return HttpResponse("Hello, world. You're at the api index.")
 
 class UserListView(APIView):
     def get(self, request):
@@ -43,3 +43,24 @@ class UserListView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Categories.objects.all()
+    serializer_class = CategoriesSerializer
+
+    @action(detail=True, methods=['get'], url_path='random_idea')
+    def random_idea(self, request, pk=None):
+        try:
+            category = self.get_object()
+            ideas = Idea.objects.filter(category=category)
+            if not ideas.exists():
+                return Response({"detail": "No ideas found for this category."}, status=404)
+            idea = random.choice(ideas)
+            serializer = IdeaSerializer(idea)
+            return Response(serializer.data)
+        except Categories.DoesNotExist:
+            return Response({"detail": "Category not found."}, status=404)
