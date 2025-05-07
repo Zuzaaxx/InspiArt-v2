@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Categories, Idea, UsersFavourites
+from .models import User, Categories, Idea, UsersFavourites, UsersGallery
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,3 +22,8 @@ class UsersFavouritesSerializer(serializers.ModelSerializer):
     class Meta:
         model = UsersFavourites
         fields = ['id', 'idea_id']
+
+class UsersGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsersGallery
+        fields = ['id', 'idea', 'title', 'description', 'date']

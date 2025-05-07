@@ -3,13 +3,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, action
 from rest_framework import viewsets,status
-from .models import User, Categories, Idea, UsersFavourites
-from .serializers import UserSerializer, CategoriesSerializer, IdeaSerializer, UsersFavouritesSerializer
+from .models import User, Categories, Idea, UsersFavourites, UsersGallery
+from .serializers import UserSerializer, CategoriesSerializer, IdeaSerializer, UsersFavouritesSerializer, UsersGallerySerializer
 from django.http import HttpResponse
 from django.http import JsonResponse
 import random
 
-# Create your views here.
 @api_view(['GET'])
 def get_user(request, id):
     try:
@@ -27,9 +26,6 @@ def test_users(request, id):
         "email": "jan@example.com"
     }
     return JsonResponse(sample_data)
-
-#def index(request):
-#    return HttpResponse("Hello, world. You're at the api index.")
 
 class UserListView(APIView):
     def get(self, request):
@@ -85,3 +81,12 @@ class UsersFavouritesViewSet(viewsets.ModelViewSet):
             return Response(status=204)
         except UsersFavourites.DoesNotExist:
             return Response({"detail": "Not found."}, status=404)
+
+class UsersGalleryViewSet(viewsets.ModelViewSet):
+    serializer_class = UsersGallerySerializer
+
+    def get_queryset(self):
+        return UsersGallery.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
