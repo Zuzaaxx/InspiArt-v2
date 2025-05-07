@@ -64,3 +64,7 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
             return Response(serializer.data)
         except Categories.DoesNotExist:
             return Response({"detail": "Category not found."}, status=404)
+
+class IdeaViewSet(viewsets.ModelViewSet):
+    queryset = Idea.objects.all()
+    serializer_class = IdeaSerializer

@@ -16,8 +16,8 @@ class Categories(models.Model):
 
 class Idea(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='ideas')
-    alternative_text = models.TextField()
+    picture = models.ImageField(upload_to='ideas', null=True, blank=True)
+    alternative_text = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.picture.name
