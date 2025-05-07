@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from .models import User
+from .models import User, Categories
 import json
 
-# Create your tests here.
+# Users
 class UserTestCase(APITestCase):
     def setUp(self):
         self.admnin_user = User.objects.create_user(username='admin', password='adminpassword', is_staff=True)
@@ -77,4 +77,34 @@ class UserTestCase(APITestCase):
         self.client.login(username='admin', password='adminpassword')
         url = reverse('user-remove-admin', args=[99999])
         response = self.client.post(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+#Categories
+class CategoriesTestCase(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.admin_user = User.objects.create_superuser(username='admin', password='adminpassword', is_staff=True)
+        self.client.login(username='admin', password='adminpassword')
+        self.category = Categories.objects.create(category_name='Test Category')
+
+    def test_get_categories(self):
+        url = reverse('categories-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(any(cat['category_name'] =='Test Category' for cat in response.data))
+
+    def test_get_category_details(self):
+        url = reverse('categories-detail', args=[self.category.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['category_name'], 'Test Category')
+
+    def test_get_random_idea_from_category(self):
+        url = reverse('categories-random-idea', args=[self.category.id])
+        response = self.client.get(url)
+        self.assertIn(response.status_code, [status.HTTP_200_OK, status.HTTP_404_NOT_FOUND])
+
+    def test_get_invalid_category(self):
+        url = reverse('categories-detail', args=[99999])
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
