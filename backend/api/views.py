@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import random
 from django.contrib.auth.hashers import make_password
+from rest_framework.permissions import IsAdminUser
 
 
 @api_view(['GET'])
@@ -30,11 +31,13 @@ def test_users(request, id):
     return JsonResponse(sample_data)
 
 class UserListView(APIView):
+    permission_classes = [IsAdminUser]
+
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
+    
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -45,6 +48,22 @@ class UserListView(APIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+
+    @action(detail=True, methods=['post'], url_path='make-admin')
+    def make_admin(self, request, pk=None):
+        user = self.get_object()
+        user.is_staff = True
+        user.save()
+        return Response({'status': 'admin role granted'}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'], url_path='remove-admin')
+    def remove_admin(self, request, pk=None):
+        user = self.get_object()
+        user.is_staff = False
+        user.save()
+        return Response({'status': 'admin role removed'}, status=status.HTTP_200_OK)
+
 
 class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Categories.objects.all()

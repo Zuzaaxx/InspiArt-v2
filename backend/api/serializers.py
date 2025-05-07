@@ -4,7 +4,11 @@ from .models import User, Categories, Idea, UsersFavourites, UsersGallery
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'is_staff']
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'is_staff': {'read_only': True},
+        }
 
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
