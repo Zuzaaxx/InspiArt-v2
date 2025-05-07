@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Categories, Idea
+from .models import User, Categories, Idea, UsersFavourites
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,4 +16,9 @@ class IdeaSerializer(serializers.ModelSerializer):
         model = Idea
         fields = ['id', 'category', 'picture', 'alternative_text']
 
-        
+class UsersFavouritesSerializer(serializers.ModelSerializer):
+    idea_id = serializers.PrimaryKeyRelatedField(source='idea', queryset=Idea.objects.all())
+
+    class Meta:
+        model = UsersFavourites
+        fields = ['id', 'idea_id']

@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, action
 from rest_framework import viewsets,status
-from .models import User, Categories, Idea
-from .serializers import UserSerializer, CategoriesSerializer, IdeaSerializer
+from .models import User, Categories, Idea, UsersFavourites
+from .serializers import UserSerializer, CategoriesSerializer, IdeaSerializer, UsersFavouritesSerializer
 from django.http import HttpResponse
 from django.http import JsonResponse
 import random
@@ -68,3 +68,20 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 class IdeaViewSet(viewsets.ModelViewSet):
     queryset = Idea.objects.all()
     serializer_class = IdeaSerializer
+
+class UsersFavouritesViewSet(viewsets.ModelViewSet):
+    serializer_class = UsersFavouritesSerializer
+
+    def get_queryset(self):
+        return UsersFavourites.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def destroy(self, request, pk=None):
+        try:
+            favourite = UsersFavourites.objects.get(idea__id=pk)
+            favourite.delete()
+            return Response(status=204)
+        except UsersFavourites.DoesNotExist:
+            return Response({"detail": "Not found."}, status=404)
