@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import random
 from django.contrib.auth.hashers import make_password
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 
 
 @api_view(['GET'])
@@ -85,6 +85,13 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 class IdeaViewSet(viewsets.ModelViewSet):
     queryset = Idea.objects.all()
     serializer_class = IdeaSerializer
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
 class UsersFavouritesViewSet(viewsets.ModelViewSet):
     serializer_class = UsersFavouritesSerializer

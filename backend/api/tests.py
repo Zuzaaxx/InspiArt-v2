@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from .models import User, Categories
+from .models import User, Categories, Idea
 import json
 
 # Users
@@ -83,7 +83,7 @@ class UserTestCase(APITestCase):
 class CategoriesTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
-        self.admin_user = User.objects.create_superuser(username='admin', password='adminpassword', is_staff=True)
+        self.admin_user = User.objects.create_user(username='admin', password='adminpassword', is_staff=True)
         self.client.login(username='admin', password='adminpassword')
         self.category = Categories.objects.create(category_name='Test Category')
 
@@ -107,4 +107,61 @@ class CategoriesTestCase(APITestCase):
     def test_get_invalid_category(self):
         url = reverse('categories-detail', args=[99999])
         response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+#Ideas
+class IdeasTestCase(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.admin_user = User.objects.create_user(username='admin', password='adminpassword', is_staff=True)
+        self.regular_user = User.objects.create_user(username='user', password='userpassword', is_staff=False)
+        self.category = Categories.objects.create(category_name='Test Category')
+        self.idea = Idea.objects.create(category=self.category, picture=None, alternative_text='Test Idea')
+
+    def test_get_ideas(self):
+        url = reverse('ideas-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(any(idea['alternative_text'] == 'Test Idea' for idea in response.data))
+
+    def test_create_idea_admin(self):
+        self.client.login(username='admin', password='adminpassword')
+        url = reverse('ideas-list')
+        data = {
+            'category': self.category.id,
+            'picture': None,
+            'alternative_text': 'New Idea'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(Idea.objects.filter(alternative_text='New Idea').exists())
+
+    def test_create_idea_non_admin(self):
+        self.client.login(username='user', password='userpassword')
+        url = reverse('ideas-list')
+        data = {
+            'category': self.category.id,
+            'picture': None,
+            'alternative_text': 'New Idea'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_idea_admin(self):
+        self.client.login(username='admin', password='adminpassword')
+        url = reverse('ideas-detail', args=[self.idea.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Idea.objects.filter(id=self.idea.id).exists())
+
+    def test_delete_idea_non_admin(self):
+        self.client.login(username='user', password='userpassword')
+        url = reverse('ideas-detail', args=[self.idea.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_idea_not_found(self):
+        self.client.login(username='admin', password='adminpassword')
+        url = reverse('ideas-detail', args=[9999])
+        response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
