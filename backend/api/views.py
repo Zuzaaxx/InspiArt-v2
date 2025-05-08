@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import random
 from django.contrib.auth.hashers import make_password
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 
 
 @api_view(['GET'])
@@ -95,16 +95,20 @@ class IdeaViewSet(viewsets.ModelViewSet):
 
 class UsersFavouritesViewSet(viewsets.ModelViewSet):
     serializer_class = UsersFavouritesSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return UsersFavourites.objects.all()
+        # Zwracamy tylko ulubione aktualnie zalogowanego użytkownika
+        return UsersFavourites.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save()
+        # Przypisujemy user z request do nowego ulubionego
+        serializer.save(user=self.request.user)
 
     def destroy(self, request, pk=None):
         try:
-            favourite = UsersFavourites.objects.get(idea__id=pk)
+            # Szukamy ulubionego pomysłu tylko dla aktualnego użytkownika
+            favourite = UsersFavourites.objects.get(user=self.request.user, idea__id=pk)
             favourite.delete()
             return Response(status=204)
         except UsersFavourites.DoesNotExist:

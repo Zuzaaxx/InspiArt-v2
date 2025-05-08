@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
-from .models import User, Categories, Idea
+from .models import User, Categories, Idea, UsersFavourites
 import json
 
 # Users
@@ -165,3 +165,60 @@ class IdeasTestCase(APITestCase):
         url = reverse('ideas-detail', args=[9999])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+#Favourites
+class FavouritesTestCase(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user1 = User.objects.create_user(username='user1', password='user1password')
+        self.user2 = User.objects.create_user(username='user2', password='user2password')
+        self.category = Categories.objects.create(category_name='Test Category')
+        self.idea1 = Idea.objects.create(category=self.category, picture=None, alternative_text='Idea 1')
+        self.idea2 = Idea.objects.create(category=self.category, picture=None, alternative_text='Idea 2')
+        # user1 ma w ulubionych idea1
+        self.fav1 = UsersFavourites.objects.create(user=self.user1, idea=self.idea1)
+
+    def test_get_favourites_authenticated(self):
+        self.client.login(username='user1', password='user1password')
+        url = reverse('favourites-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['idea_id'], self.idea1.id)
+
+    def test_get_favourites_unauthenticated(self):
+        url = reverse('favourites-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_add_favourite(self):
+        self.client.login(username='user1', password='user1password')
+        url = reverse('favourites-list')
+        data = {'idea_id': self.idea2.id}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(UsersFavourites.objects.filter(user=self.user1, idea=self.idea2).exists())
+
+    def test_add_favourite_unauthenticated(self):
+        url = reverse('favourites-list')
+        data = {'idea_id': self.idea2.id}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_favourite(self):
+        self.client.login(username='user1', password='user1password')
+        url = reverse('favourites-detail', args=[self.idea1.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(UsersFavourites.objects.filter(user=self.user1, idea=self.idea1).exists())
+
+    def test_delete_favourite_other_user(self):
+        self.client.login(username='user2', password='user2password')
+        url = reverse('favourites-detail', args=[self.idea1.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_favourite_unauthenticated(self):
+        url = reverse('favourites-detail', args=[self.idea1.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
