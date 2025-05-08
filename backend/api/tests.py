@@ -3,7 +3,11 @@ from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from .models import User, Categories, Idea, UsersFavourites, UsersGallery
+from .serializers import UserSerializer
 import json
+from rest_framework.request import Request
+from rest_framework.test import APIRequestFactory
+from .views import UserViewSet
 
 # Users
 class UserTestCase(APITestCase):
@@ -293,3 +297,38 @@ class GalleryTestCase(APITestCase):
         url = reverse('gallery-detail', args=[self.gallery_item.id])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+#Unit tests
+class UserModelUnitTest(TestCase):
+    def test_str_method(self):
+        user = User(username='testuser')
+        self.assertEqual(str(user), 'testuser')
+
+
+class UserSerializerUnitTest(APITestCase):
+    def test_user_serializer_validation(self):
+        data = {'username': 'testuser', 'email': 'test@example.com', 'password': 'pass123'}
+        serializer = UserSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+
+    def test_user_serializer_missing_fields(self):
+        data = {'username': ''}
+        serializer = UserSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('username', serializer.errors)
+
+class UserViewSetUnitTest(APITestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.user = User.objects.create_user(username='user1', password='pass')
+        self.viewset = UserViewSet()
+
+    def test_make_admin_method(self):
+        request = self.factory.post('/users/{}/make-admin/'.format(self.user.id))
+        self.viewset.request = Request(request)
+        self.viewset.kwargs = {'pk': self.user.id}
+        self.viewset.get_object = lambda: self.user
+        response = self.viewset.make_admin(request, pk=self.user.id)
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_staff)
+        self.assertEqual(response.status_code, 200)
