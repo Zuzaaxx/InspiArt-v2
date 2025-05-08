@@ -47,8 +47,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 # Application definition
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Twoje API',
+    'DESCRIPTION': 'Dokumentacja API',
+    'VERSION': '1.0.0',
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -64,6 +71,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular', 
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'corsheaders',

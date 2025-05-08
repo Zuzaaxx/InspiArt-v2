@@ -10,8 +10,14 @@ from django.http import JsonResponse
 import random
 from django.contrib.auth.hashers import make_password
 from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 
-
+@extend_schema(
+    responses={
+        200: UserSerializer,
+        404: OpenApiResponse(description='User not found'),
+    }
+)
 @api_view(['GET'])
 def get_user(request, id):
     try:
@@ -19,7 +25,7 @@ def get_user(request, id):
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "User not found", "status": 404}, status=status.HTTP_404_NOT_FOUND)
 
 # test
 def test_users(request, id):
@@ -63,6 +69,22 @@ class UserViewSet(viewsets.ModelViewSet):
         user.is_staff = False
         user.save()
         return Response({'status': 'admin role removed'}, status=status.HTTP_200_OK)
+    
+    @extend_schema(
+        responses={
+            200: OpenApiResponse(description='Admin role granted'),
+            404: OpenApiResponse(description='User not found'),
+        }
+    )
+    @action(detail=True, methods=['post'], url_path='make-admin')
+    def make_admin(self, request, pk=None):
+        try:
+            user = self.get_object()
+            user.is_staff = True
+            user.save()
+            return Response({'status': 'admin role granted'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "User not found", "status": 404}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
