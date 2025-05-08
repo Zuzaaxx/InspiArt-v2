@@ -98,16 +98,13 @@ class UsersFavouritesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Zwracamy tylko ulubione aktualnie zalogowanego użytkownika
         return UsersFavourites.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        # Przypisujemy user z request do nowego ulubionego
         serializer.save(user=self.request.user)
 
     def destroy(self, request, pk=None):
         try:
-            # Szukamy ulubionego pomysłu tylko dla aktualnego użytkownika
             favourite = UsersFavourites.objects.get(user=self.request.user, idea__id=pk)
             favourite.delete()
             return Response(status=204)
@@ -116,12 +113,21 @@ class UsersFavouritesViewSet(viewsets.ModelViewSet):
 
 class UsersGalleryViewSet(viewsets.ModelViewSet):
     serializer_class = UsersGallerySerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return UsersGallery.objects.all()
+        return UsersGallery.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(user=self.request.user)
+
+    def destroy(self, request, pk=None):
+        try:
+            gallery_item = UsersGallery.objects.get(user=self.request.user, id=pk)
+            gallery_item.delete()
+            return Response(status=204)
+        except UsersGallery.DoesNotExist:
+            return Response({"detail": "Not found."}, status=404)
 
 @api_view(['GET', 'PUT'])
 def user_profile(request):
