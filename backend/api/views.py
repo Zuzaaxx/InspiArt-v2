@@ -12,6 +12,7 @@ import random
 from django.contrib.auth.hashers import make_password
 from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiResponse
+from .tasks import send_welcome_email
 
 @extend_schema(
     responses={
@@ -62,7 +63,8 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            send_welcome_email.delay(user.email, user.username)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
