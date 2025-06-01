@@ -11,9 +11,17 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <LoginForm onLoginSuccess={handleLoginSuccess} />
-            <p>Don't have an account? <Link to="/join">Join here</Link></p>
+        <div className="login-page-container">
+            <div className="top-panel">
+                <div className="still-dont-have">Still don't have an account?</div>
+                <button className="sign-up-button" onClick={() => navigate('/join')}>Sign up</button>
+            </div>
+            <div className="login-content">
+                <LoginForm onLoginSuccess={handleLoginSuccess} />
+                <div className="right-image-container">
+                    <img src="/src/assets/logo-bird.png" alt="Bird" className="bird-image" />
+                </div>
+            </div>
         </div>
     );
 };

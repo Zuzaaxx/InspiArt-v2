@@ -7,7 +7,6 @@ const LoginForm = ({ onLoginSuccess }) => {
         password: '',
     });
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,7 +16,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         }));
     };
 
-const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
@@ -42,39 +41,48 @@ const handleSubmit = async (e) => {
             const data = await response.json();
             onLoginSuccess(data);
             localStorage.setItem('authToken', data.key);
-            navigate('/start');
         } catch (err) {
             setError(err.message);
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
+        <div className="login-form-container">
+            <div className="logo">
+                <span className="logo-text">InspiArt</span>
+                <span className="logo-feather" role="img" aria-label="feather">🪶</span>
+            </div>
+            <h2 className="login-heading">Sign in to see your inspirations:</h2>
+            <form onSubmit={handleSubmit} className="login-form">
+                {error && <div className="error-message">{error}</div>}
+                <label htmlFor="username" className="input-label">Username:</label>
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className="input-field"
+                    placeholder="username"
+                    required
+                />
+                <label htmlFor="password" className="input-label">Password:</label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="input-field"
+                    placeholder="password"
+                    required
+                />
+                <button type="submit" className="login-button">Log in</button>
             </form>
-            {error && <p className="error">{error}</p>}
+            <div className="forgot-password-section">
+                <span className="forgot-password-text">Forgot password?</span>
+                <a href="/forgot-password" className="forgot-password-link">Click here</a>
+            </div>
         </div>
     );
 };
