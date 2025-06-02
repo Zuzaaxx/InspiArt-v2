@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Navigation from './Navigation';
+import './StartPage.css';
 
 const StartPage = ({ token }) => {
     const [username, setUsername] = useState('');
@@ -31,8 +33,30 @@ const StartPage = ({ token }) => {
     }
 
     return (
-        <div>
-            <h1>Welcome, {username}!</h1>
+        <div className="container">
+            <Navigation />
+            <div className="base-container">
+                <img className="decoration-top" alt="" src="/src/assets/Vector 3.svg" />
+                <div className="section">
+                    <div className="option">
+                        <img src="/src/assets/description.svg" alt="description" />
+                        <p className="option-label">description</p>
+                    </div>
+                    <div className="option">
+                        <img src="/src/assets/simple-drawing.svg" alt="simple drawing" />
+                        <p className="option-label">simple drawing</p>
+                    </div>
+                    <div className="option">
+                        <img src="/src/assets/scribble-art.svg" alt="scribble art" />
+                        <p className="option-label">scribble art</p>
+                    </div>
+                    <div className="option">
+                        <i className="fa-solid fa-dice"></i>
+                        <p className="option-label">random</p>
+                    </div>
+                </div>
+                <img className="decoration-bottom" alt="" src="/src/assets/Vector 4.svg" />
+            </div>
         </div>
     );
 };
