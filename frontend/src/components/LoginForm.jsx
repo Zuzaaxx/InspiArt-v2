@@ -47,44 +47,50 @@ const LoginForm = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="login-form-container">
-            <div className="logo">
-                <span className="logo-text">InspiArt</span>
-                <span className="logo-feather" role="img" aria-label="feather">🪶</span>
+        <div className="login-container">
+            <div className="inspiart">
+            <span className="inspiart-text">InspiArt</span>
+            <span role="img" aria-label="feather">🪶</span>
             </div>
-            <h2 className="login-heading">Sign in to see your inspirations:</h2>
-            <form onSubmit={handleSubmit} className="login-form">
+
+            <div className="login-form">
+            <p className="log-in-to">Log in to see your inspirations</p>
+            <form onSubmit={handleSubmit}>
+                <div className="message">
                 {error && <div className="error-message">{error}</div>}
-                <label htmlFor="username" className="input-label">Username:</label>
+                </div>
+
+                <p>Username:</p>
                 <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="input-field"
-                    placeholder="username"
-                    required
+                name="username"
+                type="text"
+                value={formData.username}
+                onChange={handleChange}
+                className={error ? 'no-valid' : ''}
                 />
-                <label htmlFor="password" className="input-label">Password:</label>
+
+                <p>Password:</p>
                 <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="input-field"
-                    placeholder="password"
-                    required
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={error ? 'no-valid' : ''}
                 />
-                <button type="submit" className="login-button">Log in</button>
+
+                <button type="submit">Log in</button>
             </form>
-            <div className="forgot-password-section">
-                <span className="forgot-password-text">Forgot password?</span>
-                <a href="/forgot-password" className="forgot-password-link">Click here</a>
+            </div>
+
+            <div className="forgot">
+            <p className="forgot-password">Forgot password?</p>
+            <p className="click-here" onClick={() => window.location.href = '/forgot-password'}>
+                Click here
+            </p>
             </div>
         </div>
     );
+
 };
 
 export default LoginForm;

@@ -10,4 +10,5 @@ node_modules/
 dist/
 .vite/
 
+run_dev.bat
 notes.txt
