@@ -1,14 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import UserForm from './UserForm';
+import RegisterForm from './RegisterForm';
+import './LoginPage.css';
 
-const JoinPage = () => {
-    return (
-        <div>
-            <UserForm onUserAdded={(data) => console.log('User added:', data)} />
-            <p>Already have an account? <Link to="/login">Login here</Link></p>
+const SignUpPage = () => {
+  return (
+    <div className="container">
+      <div className="login-container">
+        <div className="inspiart" style={{ marginTop: 0, paddingTop: 0 }}>
+          <span className="inspiart-text">InspiArt</span>
+          <span role="img" aria-label="feather">🪶</span>
         </div>
-    );
+        <RegisterForm />
+      </div>
+
+      <div className="base-container">
+        <div className="top-panel">
+          <img className="decoration-top" alt="" src="/src/assets/Vector 1.svg" />
+        </div>
+
+        <img className="decoration-bottom" alt="" src="/src/assets/Vector 2.svg" />
+      </div>
+    </div>
+  );
 };
 
-export default JoinPage;
+export default SignUpPage;

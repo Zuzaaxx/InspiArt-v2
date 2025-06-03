@@ -8,7 +8,7 @@ const LoginPage = () => {
 
     const handleLoginSuccess = (data) => {
         console.log('Login successful:', data);
-        navigate('/');
+        navigate('/start');
     };
 
     return (
