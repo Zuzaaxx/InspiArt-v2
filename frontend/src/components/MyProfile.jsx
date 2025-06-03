@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navigation from './Navigation';
 
 const MyProfile = () => {
   const [userData, setUserData] = useState({
@@ -38,41 +39,7 @@ const MyProfile = () => {
 
   return (
     <div className="container">
-      <nav>
-        <div className="inspiart">
-          <span className="inspiart-text">InspiArt</span>
-          <span role="img" aria-label="feather">🪶</span>
-        </div>
-        <div className="menu">
-          <ul>
-            <li>
-              <a href="start" className="menu-button">
-                <i className="fa-solid fa-house"></i>
-                <p className="menu-button-text">Start</p>
-              </a>
-            </li>
-            <li>
-              <a href="favourites" className="menu-button">
-                <i className="fa-solid fa-heart"></i>
-                <p className="menu-button-text">Favourite ideas</p>
-              </a>
-            </li>
-            <li>
-              <a href="gallery" className="menu-button" style={{ color: '#d46900' }}>
-                <i className="fa-solid fa-image"></i>
-                <p className="menu-button-text">My gallery</p>
-              </a>
-            </li>
-            <li>
-              <a href="profile" className="menu-button">
-                <i className="fa-solid fa-user"></i>
-                <p className="menu-button-text">My profile</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <button className="log-out" onClick={() => window.location.href='login'}>Log out</button>
-      </nav>
+      <Navigation />
       <div className="base-container">
         <img className="decoration-top" alt="" src="public/img/Vector 5.svg" />
         <div className="section">
