@@ -17,3 +17,20 @@ InspiArt doskonale sprawdzi się w przypadku:
 - Braku motywacji do tworzenia,
 - Trudności w rozpoczęciu nowego, niecodziennego projektu artystycznego,
 - Poszukiwania wyzwań i kreatywnych inspiracji.
+
+## Instrukcja uruchomienia
+
+### Backend
+
+Aby uruchomić backend, przejdź do folderu backend i tam wykonaj polecenie:
+
+```
+python manage.py runserver
+```
+
+### Frontend
+
+Aby uruchomić frontend, przejdź do folderu frontend i tam wykonaj polecenie:
+
+```
+npm run dev
