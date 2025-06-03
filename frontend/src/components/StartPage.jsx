@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from './Navigation';
 import './StartPage.css';
 
 const StartPage = ({ token }) => {
     const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -38,19 +40,19 @@ const StartPage = ({ token }) => {
             <div className="base-container">
                 <img className="decoration-top" alt="" src="/src/assets/Vector 3.svg" />
                 <div className="section">
-                    <div className="option">
+                    <div className="option" onClick={() => navigate('/description')} style={{ cursor: 'pointer' }}>
                         <img src="/src/assets/description.svg" alt="description" />
                         <p className="option-label">description</p>
                     </div>
-                    <div className="option">
+                    <div className="option" onClick={() => navigate('/simple-drawing')} style={{ cursor: 'pointer' }}>
                         <img src="/src/assets/simple-drawing.svg" alt="simple drawing" />
                         <p className="option-label">simple drawing</p>
                     </div>
-                    <div className="option">
+                    <div className="option" onClick={() => navigate('/scribble-art')} style={{ cursor: 'pointer' }}>
                         <img src="/src/assets/scribble-art.svg" alt="scribble art" />
                         <p className="option-label">scribble art</p>
                     </div>
-                    <div className="option">
+                    <div className="option" onClick={() => navigate('/random')} style={{ cursor: 'pointer' }}>
                         <i className="fa-solid fa-dice"></i>
                         <p className="option-label">random</p>
                     </div>

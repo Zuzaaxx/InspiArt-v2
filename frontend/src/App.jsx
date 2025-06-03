@@ -6,6 +6,10 @@ import UserDetail from './components/UserDetails';
 import LoginPage from './components/LoginPage';
 import JoinPage from './components/JoinPage';
 import StartPage from './components/StartPage';
+import IdeaView from './components/IdeaView';
+import FavouriteIdeas from './components/FavouriteIdeas';
+import MyGallery from './components/MyGallery';
+import MyProfile from './components/MyProfile';
 
 const App = () => {
     const token = localStorage.getItem('authToken');
@@ -23,6 +27,13 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/join" element={<JoinPage />} />
               <Route path="/start" element={<StartPage token={token} />} />
+              <Route path="/favourites" element={<FavouriteIdeas />} />
+              <Route path="/gallery" element={<MyGallery />} />
+              <Route path="/profile" element={<MyProfile />} />
+              <Route path="/description" element={<IdeaView />} />
+              <Route path="/simple-drawing" element={<IdeaView />} />
+              <Route path="/scribble-art" element={<IdeaView />} />
+              <Route path="/random" element={<IdeaView />} />
               <Route path="/" element={<Navigate to={token ? "/start" : "/login"} replace />} />
               <Route path="*" element={<Navigate to={token ? "/start" : "/login"} replace />} />
           </Routes>
