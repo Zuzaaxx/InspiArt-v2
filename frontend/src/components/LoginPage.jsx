@@ -36,10 +36,6 @@ const LoginPage = () => {
                     src="/src/assets/Vector 2.svg"
                 />
             </div>
-
-            <div className="logo-picture">
-                <img src="/src/assets/logo-bird.png" alt="Logo" />
-            </div>
         </div>
     );
 };
