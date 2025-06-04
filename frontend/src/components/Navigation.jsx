@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { FaHome, FaHeart, FaImage, FaUser } from 'react-icons/fa';
 import './Navigation.css';
 
 const Navigation = () => {
@@ -20,25 +21,25 @@ const Navigation = () => {
                 <ul>
                     <li>
                         <NavLink to="/start" className={({ isActive }) => isActive ? 'menu-button active' : 'menu-button'}>
-                            <i className="fa-solid fa-house"></i>
+                            <FaHome />
                             <p className="menu-button-text">Start</p>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to="/favourites" className={({ isActive }) => isActive ? 'menu-button active' : 'menu-button'}>
-                            <i className="fa-solid fa-heart"></i>
+                            <FaHeart />
                             <p className="menu-button-text">Favourite ideas</p>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to="/gallery" className={({ isActive }) => isActive ? 'menu-button active' : 'menu-button'}>
-                            <i className="fa-solid fa-image"></i>
+                            <FaImage />
                             <p className="menu-button-text">My gallery</p>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to="/profile" className={({ isActive }) => isActive ? 'menu-button active' : 'menu-button'}>
-                            <i className="fa-solid fa-user"></i>
+                            <FaUser />
                             <p className="menu-button-text">My profile</p>
                         </NavLink>
                     </li>
