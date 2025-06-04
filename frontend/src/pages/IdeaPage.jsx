@@ -1,7 +1,7 @@
 import React from 'react';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 
-const IdeaView = ({ idea }) => {
+const IdeaPage = ({ idea }) => {
   // idea prop should have { id, image, title, description }
 
   return (
@@ -33,4 +33,4 @@ const IdeaView = ({ idea }) => {
   );
 };
 
-export default IdeaView;
+export default IdeaPage;

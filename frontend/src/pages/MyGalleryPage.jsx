@@ -1,7 +1,7 @@
 import React from 'react';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 
-const MyGallery = ({ projects }) => {
+const MyGalleryPage = ({ projects }) => {
   // projects is an array of { id, image, title, description }
 
   return (
@@ -32,7 +32,7 @@ const MyGallery = ({ projects }) => {
               <p>No projects found.</p>
             )}
           </div>
-          <button className="add-idea-button" onClick={() => window.location.href='addProject'}>
+          <button className="add-idea-button" onClick={() => window.location.href = 'addProject'}>
             <i className="fa-solid fa-plus"></i>
           </button>
         </div>
@@ -42,4 +42,4 @@ const MyGallery = ({ projects }) => {
   );
 };
 
-export default MyGallery;
+export default MyGalleryPage;

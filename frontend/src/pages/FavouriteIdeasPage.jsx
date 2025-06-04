@@ -1,7 +1,7 @@
 import React from 'react';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 
-const FavouriteIdeas = ({ favouriteIdeas }) => {
+const FavouriteIdeasPage = ({ favouriteIdeas }) => {
   // favouriteIdeas is an array of { id, image, title, description }
 
   return (
@@ -39,4 +39,4 @@ const FavouriteIdeas = ({ favouriteIdeas }) => {
   );
 };
 
-export default FavouriteIdeas;
+export default FavouriteIdeasPage;

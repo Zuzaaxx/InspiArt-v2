@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 
-const MyProfile = () => {
+const MyProfilePage = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -86,4 +86,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default MyProfilePage;

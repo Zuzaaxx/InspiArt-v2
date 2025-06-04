@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 import './StartPage.css';
 
 const StartPage = ({ token }) => {

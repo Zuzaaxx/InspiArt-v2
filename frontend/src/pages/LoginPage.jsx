@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LoginForm from './LoginForm';
+import LoginForm from '../components/LoginForm';
 import './LoginPage.css'
 
 const LoginPage = () => {
@@ -35,6 +35,10 @@ const LoginPage = () => {
                     alt=""
                     src="/src/assets/Vector 2.svg"
                 />
+                <div>
+                    <img src="/src/assets/logo-bird"></img>
+                </div>
+
             </div>
         </div>
     );
