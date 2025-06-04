@@ -47,46 +47,56 @@ const LoginForm = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="login-container">
-            <div className="inspiart">
-            <span className="inspiart-text">InspiArt</span>
-            <span role="img" aria-label="feather">🪶</span>
+        <div className="max-w-md mx-auto p-8 bg-white rounded-lg">
+            <div className="flex items-center space-x-2 mb-8">
+                <span className="text-3xl font-semibold text-orange-600">InspiArt</span>
+                <span role="img" aria-label="feather" className="text-2xl">🪶</span>
             </div>
 
-            <div className="login-form">
-            <p className="log-in-to">Log in to see your inspirations</p>
-            <form onSubmit={handleSubmit}>
-                <div className="message">
-                {error && <div className="error-message">{error}</div>}
-                </div>
+            <div className="mb-6">
+                <p className="text-lg font-medium mb-4">Log in to see your inspirations</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        {error && <div className="text-red-600 mb-2">{error}</div>}
+                    </div>
 
-                <p>Username:</p>
-                <input
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={handleChange}
-                className={error ? 'no-valid' : ''}
-                />
+                    <label htmlFor="username" className="block mb-1 font-semibold">Username:</label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        value={formData.username}
+                        onChange={handleChange}
+                        className={`w-full rounded-md bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${error ? 'border border-red-600' : 'border border-transparent'}`}
+                    />
 
-                <p>Password:</p>
-                <input
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                className={error ? 'no-valid' : ''}
-                />
+                    <label htmlFor="password" className="block mt-4 mb-1 font-semibold">Password:</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className={`w-full rounded-md bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 ${error ? 'border border-red-600' : 'border border-transparent'}`}
+                    />
 
-                <button type="submit">Log in</button>
-            </form>
+                    <button
+                        type="submit"
+                        className="mt-6 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-full transition-colors duration-300"
+                    >
+                        Log in
+                    </button>
+                </form>
             </div>
 
-            <div className="forgot">
-            <p className="forgot-password">Forgot password?</p>
-            <p className="click-here" onClick={() => window.location.href = '/forgot-password'}>
-                Click here
-            </p>
+            <div className="flex justify-center space-x-1 text-sm">
+                <p className="text-gray-700">Forgot password?</p>
+                <p
+                    className="text-orange-500 cursor-pointer hover:underline"
+                    onClick={() => window.location.href = '/forgot-password'}
+                >
+                    Click here
+                </p>
             </div>
         </div>
     );

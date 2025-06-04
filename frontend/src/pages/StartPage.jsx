@@ -35,7 +35,7 @@ const StartPage = ({ token }) => {
     }
 
     return (
-        <div className="w-screen h-screen flex flex-row font-sans bg-gradient-to-b from-[#ffffff] to-[#f5e9aa]">
+        <div className="w-screen h-screen flex flex-row font-sans bg-gradient-to-b from-[#f9f1e7] to-[#f0d9b5]">
             <div className="w-72">
                 <Navigation />
             </div>
