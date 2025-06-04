@@ -10,6 +10,8 @@ import IdeaPage from './pages/IdeaPage';
 import FavouriteIdeasPage from './pages/FavouriteIdeasPage';
 import MyGalleryPage from './pages/MyGalleryPage';
 import MyProfilePage from './pages/MyProfilePage';
+import TailwindTest from './components/TailwindTest';
+import './index.css';
 
 const App = () => {
   const token = localStorage.getItem('authToken');
@@ -23,6 +25,7 @@ const App = () => {
             <UsersList />
           </div>
         } />
+        <Route path='/test' element={<TailwindTest />} />
         <Route path="/users-list/:id" element={<UserDetail />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/join" element={<JoinPage />} />

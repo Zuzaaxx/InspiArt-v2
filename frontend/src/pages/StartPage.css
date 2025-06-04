@@ -1,4 +1,4 @@
-body {
+/*body {
     margin: 0px;
 }
 
@@ -155,7 +155,6 @@ button:hover {
     grid-template-rows: repeat(2, 1fr);
 
     grid-gap: 2em;
-    /*overflow: auto;*/
     place-items: center;
     justify-items: center;
     align-items: center;
@@ -206,3 +205,4 @@ button:hover {
     width:calc(100vw - 300px);
     height: 25%;
 }
+*/
