@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import { FaDice } from 'react-icons/fa';
 import './StartPage.css';
 
 const StartPage = ({ token }) => {
@@ -53,7 +54,7 @@ const StartPage = ({ token }) => {
                         <p className="option-label">scribble art</p>
                     </div>
                     <div className="option" onClick={() => navigate('/random')} style={{ cursor: 'pointer' }}>
-                        <i className="fa-solid fa-dice"></i>
+                        <FaDice />
                         <p className="option-label">random</p>
                     </div>
                 </div>
