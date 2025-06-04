@@ -32,7 +32,6 @@ const MyProfilePage = () => {
 
   const handleSave = () => {
     // TODO: Implement save logic (API call)
-    console.log('Saving user data:', userData);
     // For demo, save to localStorage
     localStorage.setItem('currentUser', JSON.stringify(userData));
     alert('User data saved successfully!');

@@ -21,7 +21,6 @@ const App = () => {
       <Routes>
         <Route path="/users-list" element={
           <div>
-            <UserForm onUserAdded={(newUser) => console.log('Dodano użytkownika:', newUser)} />
             <UsersList />
           </div>
         } />

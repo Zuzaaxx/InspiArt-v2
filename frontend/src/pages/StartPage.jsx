@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { FaDice } from 'react-icons/fa';
-// Removed unused CSS import
-// import './StartPage.css';
 
 const StartPage = ({ token }) => {
     const [username, setUsername] = useState('');
@@ -37,7 +35,7 @@ const StartPage = ({ token }) => {
     }
 
     return (
-        <div className="w-screen h-screen flex flex-row font-sans bg-gradient-to-b from-white to-yellow-200">
+        <div className="w-screen h-screen flex flex-row font-sans bg-gradient-to-b from-[#ffffff] to-[#f5e9aa]">
             <div className="w-72">
                 <Navigation />
             </div>
@@ -57,11 +55,10 @@ const StartPage = ({ token }) => {
                         <p className="text-xl text-center">scribble art</p>
                     </div>
                     <div className="w-3/5 h-36 bg-white/90 p-12 rounded-3xl flex flex-col items-center cursor-pointer" onClick={() => navigate('/random')}>
-                        <FaDice className="mb-2 text-black text-6xl" />
+                        <FaDice className="mb-2 text-black text-8x8" />
                         <p className="text-xl text-center">random</p>
                     </div>
                 </div>
-                <img className="flex w-full mt-auto mb-auto" alt="" src="/src/assets/Vector 4.svg" />
             </div>
         </div>
     );

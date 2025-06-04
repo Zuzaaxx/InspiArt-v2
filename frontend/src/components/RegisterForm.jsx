@@ -39,7 +39,6 @@ const RegisterForm = () => {
     }
 
     // TODO: Implement form submission logic (e.g., API call)
-    console.log('Form submitted:', formData);
 
     // Simulate successful user addition
     setSuccessMessage('New user has been added successfully!');
