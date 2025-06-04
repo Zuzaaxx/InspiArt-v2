@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
+import './MyProfilePage.css';
 
 const MyProfilePage = () => {
   const [userData, setUserData] = useState({
@@ -81,6 +82,7 @@ const MyProfilePage = () => {
           <button className="save" onClick={handleSave}>Save changes</button>
         </div>
         <img className="decoration-bottom" alt="" src="public/img/Vector 4.svg" />
+        <img className="bird-illustration" alt="bird" src="public/img/logo-bird.png" />
       </div>
     </div>
   );
