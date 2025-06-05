@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import './MyProfilePage.css';
+import { FaUser } from 'react-icons/fa';
 
 const MyProfilePage = () => {
   const [userData, setUserData] = useState({
@@ -10,9 +11,7 @@ const MyProfilePage = () => {
     password: '',
   });
 
-  // Simulate fetching current user data on mount
   useEffect(() => {
-    // TODO: Replace with actual API call or auth context
     const storedUser = JSON.parse(localStorage.getItem('currentUser')) || {
       name: 'John Doe',
       email: 'john.doe@example.com',
@@ -31,8 +30,6 @@ const MyProfilePage = () => {
   };
 
   const handleSave = () => {
-    // TODO: Implement save logic (API call)
-    // For demo, save to localStorage
     localStorage.setItem('currentUser', JSON.stringify(userData));
     alert('User data saved successfully!');
   };
@@ -43,7 +40,7 @@ const MyProfilePage = () => {
       <div className="base-container">
         <img className="decoration-top" alt="" src="public/img/Vector 5.svg" />
         <div className="section">
-          <img className="profile-picture" src="public/img/profile-picture.svg" alt="profile" />
+          <FaUser />
           <form>
             <p className="input-label">Name:</p>
             <input

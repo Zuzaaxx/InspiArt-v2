@@ -25,7 +25,6 @@ const RegisterForm = () => {
     setErrorMessages([]);
     setSuccessMessage('');
 
-    // Basic client-side validation example
     const errors = [];
     if (!formData.name) errors.push('Name is required.');
     if (!formData.username) errors.push('Username is required.');
@@ -38,9 +37,6 @@ const RegisterForm = () => {
       return;
     }
 
-    // TODO: Implement form submission logic (e.g., API call)
-
-    // Simulate successful user addition
     setSuccessMessage('New user has been added successfully!');
     setFormData({
       name: '',

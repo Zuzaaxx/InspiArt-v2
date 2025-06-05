@@ -1,11 +1,9 @@
-/* Container for the whole page */
 .container {
   display: flex;
   height: 100vh;
   font-family: 'Inter', sans-serif;
 }
 
-/* Base container for right side content with curved background */
 .base-container {
   flex: 1;
   position: relative;
@@ -18,7 +16,6 @@
   box-shadow: inset 0 0 50px #c48a2f44;
 }
 
-/* Top and bottom decoration images */
 .decoration-top {
   position: absolute;
   top: 0;
@@ -39,7 +36,6 @@
   z-index: 1;
 }
 
-/* Section containing profile picture and form */
 .section {
   position: relative;
   z-index: 10;
@@ -51,7 +47,6 @@
   align-items: center;
 }
 
-/* Profile picture container with white circle background */
 .profile-picture {
   width: 120px;
   height: 120px;
@@ -64,7 +59,6 @@
   object-fit: contain;
 }
 
-/* Form styling */
 form {
   width: 100%;
   display: flex;
@@ -72,14 +66,12 @@ form {
   gap: 1.5rem;
 }
 
-/* Labels for inputs */
 .input-label {
   font-weight: 600;
   margin-bottom: 0.3rem;
   color: #4a3a1a;
 }
 
-/* Inputs styling */
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -99,7 +91,6 @@ input[type="password"]:focus {
   box-shadow: 0 0 8px #f28618;
 }
 
-/* Save button styling */
 .save {
   margin-top: 2rem;
   background-color: #f28618;
@@ -118,7 +109,6 @@ input[type="password"]:focus {
   background-color: #854E25;
 }
 
-/* Bird illustration styling */
 .bird-illustration {
   position: absolute;
   bottom: 2rem;

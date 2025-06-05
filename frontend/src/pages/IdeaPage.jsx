@@ -2,8 +2,6 @@ import React from 'react';
 import Navigation from '../components/Navigation';
 
 const IdeaPage = ({ idea }) => {
-  // idea prop should have { id, image, title, description }
-
   return (
     <div className="container">
       <Navigation />

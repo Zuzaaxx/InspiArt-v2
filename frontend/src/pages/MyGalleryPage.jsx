@@ -2,8 +2,6 @@ import React from 'react';
 import Navigation from '../components/Navigation';
 
 const MyGalleryPage = ({ projects }) => {
-  // projects is an array of { id, image, title, description }
-
   return (
     <div className="container">
       <Navigation />
