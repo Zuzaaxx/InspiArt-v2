@@ -32,16 +32,16 @@ const MyProfilePage = () => {
           },
         });
 
-          if (response.ok) {
-            const data = await response.json();
-            setUserData({
-              name: data.first_name,
-              username: data.username,
-              email: data.email,
-            });
-          } else {
-            console.error('Failed to fetch user data');
-          }
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            name: data.first_name,
+            username: data.username,
+            email: data.email,
+          });
+        } else {
+          console.error('Failed to fetch user data');
+        }
       } catch (error) {
         console.error('Error fetching profile:', error);
       } finally {
