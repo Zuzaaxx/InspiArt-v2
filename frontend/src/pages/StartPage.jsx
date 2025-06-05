@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { FaDice } from 'react-icons/fa';
 
-const StartPage = ({ token }) => {
+const StartPage = () => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
+
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -30,8 +32,14 @@ const StartPage = ({ token }) => {
         }
     }, [token]);
 
+    useEffect(() => {
+        if (!token) {
+            navigate('/please-login');
+        }
+    }, [token, navigate]);
+
     if (!token) {
-        return <p>Please login first.</p>;
+        return null;
     }
 
     return (
