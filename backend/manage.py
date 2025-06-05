@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
@@ -12,9 +11,7 @@ def main():
 
     celery_process = None
 
-    # Check if 'runserver' is in the command line arguments
     if 'runserver' in sys.argv:
-        # Start the Celery worker as a subprocess
         celery_command = [
             'celery',
             '-A', 'backend.celery',
@@ -27,7 +24,6 @@ def main():
         except Exception as e:
             print(f"Failed to start Celery worker: {e}")
 
-        # Ensure the Celery worker is terminated when the main process exits
         def cleanup():
             if celery_process and celery_process.poll() is None:
                 print("Terminating Celery worker...")
@@ -39,7 +35,6 @@ def main():
 
         atexit.register(cleanup)
 
-        # Also handle signals to terminate Celery worker properly
         def signal_handler(signum, frame):
             cleanup()
             sys.exit(0)

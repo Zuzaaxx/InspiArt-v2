@@ -179,7 +179,6 @@ class FavouritesTestCase(APITestCase):
         self.category = Categories.objects.create(category_name='Test Category')
         self.idea1 = Idea.objects.create(category=self.category, picture=None, alternative_text='Idea 1')
         self.idea2 = Idea.objects.create(category=self.category, picture=None, alternative_text='Idea 2')
-        # user1 ma w ulubionych idea1
         self.fav1 = UsersFavourites.objects.create(user=self.user1, idea=self.idea1)
 
     def test_get_favourites_authenticated(self):

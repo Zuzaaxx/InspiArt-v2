@@ -31,7 +31,6 @@ def get_user(request, id):
     except Exception:
         return Response({"error": "Internal server error", "status": 500}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# test
 def test_users(request, id):
     sample_data = {
         "id": 1,
