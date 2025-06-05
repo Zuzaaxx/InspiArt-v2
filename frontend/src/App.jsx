@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/simple-drawing" element={<IdeaPage />} />
         <Route path="/scribble-art" element={<IdeaPage />} />
         <Route path="/random" element={<IdeaPage />} />
+        <Route path="/idea/:id" element={<IdeaPage />} />
         <Route path="/please-login" element={<PleaseLoginPage />} />
         <Route path="/advanced" element={<AdvancedPage />} />
         <Route path="/" element={<Navigate to={token ? "/start" : "/login"} replace />} />

@@ -55,18 +55,20 @@ const MyGalleryPage = () => {
       <div className="w-72">
         <Navigation />
       </div>
-      <div className="flex-1 p-10 flex flex-col items-center">
+      <div className="flex-1 p-10 flex flex-col items-center justify-center">
         <img className="decoration-top" alt="" src="public/img/Vector 3.svg" />
-        <div className="top-layer w-full max-w-6xl">
-          <div className="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
-            {galleryItems.length > 0 ? (
-              galleryItems.map(item => (
+        <div className="top-layer w-full max-w-6xl flex justify-center items-center">
+          {galleryItems.length > 0 ? (
+            <div className="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+              {galleryItems.map(item => (
                 <Idea key={item.id} idea={item} />
-              ))
-            ) : (
-              <p>No gallery items found.</p>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-2xl text-[#4a3a1a] font-semibold text-center">
+              you don't have any drawings here yet
+            </p>
+          )}
         </div>
         <img className="decoration-bottom" alt="" src="public/img/Vector 4.svg" />
       </div>
