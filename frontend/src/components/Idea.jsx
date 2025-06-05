@@ -10,7 +10,7 @@ const Idea = ({ idea }) => {
           className="w-full h-56 object-cover rounded-md mb-4"
         />
       )}
-      <h3 className="text-xl font-semibold mb-2">{idea.alternative_text || 'Untitled'}</h3>
+      <h3 className="text-xl font-semibold mb-2">{idea.alternative_text || idea.title || 'Untitled'}</h3>
       {idea.picture && <p className="text-gray-700 text-sm">{idea.picture}</p>}
     </div>
   );

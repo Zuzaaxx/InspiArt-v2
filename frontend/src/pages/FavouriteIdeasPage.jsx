@@ -25,7 +25,26 @@ const FavouriteIdeasPage = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setFavouriteIdeas(data);
+
+          const ideasWithDetails = await Promise.all(
+            data.map(async (fav) => {
+              try {
+                const ideaResponse = await fetch(`http://127.0.0.1:8000/api/ideas/${fav.idea.id}/`);
+                if (ideaResponse.ok) {
+                  const ideaData = await ideaResponse.json();
+                  return { ...fav, idea: ideaData };
+                } else {
+                  return fav;
+                }
+              } catch (error) {
+                return fav;
+              }
+            })
+          );
+
+          console.log('Fetched favourite ideas with details:', ideasWithDetails);
+
+          setFavouriteIdeas(ideasWithDetails);
         } else {
           console.error('Failed to fetch favourite ideas');
         }
@@ -63,8 +82,8 @@ const FavouriteIdeasPage = () => {
           </div>
           <div className="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
             {favouriteIdeas.length > 0 ? (
-              favouriteIdeas.map(idea => (
-                <Idea key={idea.id} idea={idea} />
+              favouriteIdeas.map(fav => (
+                <Idea key={fav.id} idea={fav.idea} />
               ))
             ) : (
               <p>No favourite ideas found.</p>
