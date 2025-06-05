@@ -132,6 +132,22 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 @extend_schema(
     tags=['Ideas'],
     responses={
+        200: IdeaSerializer,
+        404: OpenApiResponse(description='No ideas found'),
+    }
+)
+@api_view(['GET'])
+def random_idea(request):
+    ideas = Idea.objects.all()
+    if not ideas.exists():
+        return Response({"detail": "No ideas found."}, status=404)
+    idea = random.choice(ideas)
+    serializer = IdeaSerializer(idea)
+    return Response(serializer.data)
+
+@extend_schema(
+    tags=['Ideas'],
+    responses={
         200: IdeaSerializer(many=True),
         201: IdeaSerializer,
         403: OpenApiResponse(description='Forbidden'),
@@ -142,10 +158,7 @@ class IdeaViewSet(viewsets.ModelViewSet):
     serializer_class = IdeaSerializer
 
     def get_permissions(self):
-        if self.action == 'list':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [IsAdminUser]
+        permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
 @extend_schema(

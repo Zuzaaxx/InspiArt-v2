@@ -38,11 +38,11 @@ class IdeaSerializer(serializers.ModelSerializer):
         fields = ['id', 'category', 'picture', 'alternative_text']
 
 class UsersFavouritesSerializer(serializers.ModelSerializer):
-    idea_id = serializers.PrimaryKeyRelatedField(source='idea', queryset=Idea.objects.all())
+    idea = IdeaSerializer(read_only=True)
 
     class Meta:
         model = UsersFavourites
-        fields = ['id', 'idea_id']
+        fields = ['id', 'idea']
 
 class UsersGallerySerializer(serializers.ModelSerializer):
     class Meta:

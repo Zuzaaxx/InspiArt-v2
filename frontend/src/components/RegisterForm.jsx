@@ -20,7 +20,7 @@ const RegisterForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessages([]);
     setSuccessMessage('');
@@ -37,14 +37,51 @@ const RegisterForm = () => {
       return;
     }
 
-    setSuccessMessage('New user has been added successfully!');
-    setFormData({
-      name: '',
-      username: '',
-      password: '',
-      confirmedPassword: '',
-      email: '',
-    });
+    try {
+      const payload = {
+        first_name: formData.name,
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+      };
+
+      const response = await fetch('http://127.0.0.1:8000/api/users/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (errorData) {
+          const backendErrors = [];
+          for (const key in errorData) {
+            if (Array.isArray(errorData[key])) {
+              backendErrors.push(...errorData[key]);
+            } else {
+              backendErrors.push(errorData[key]);
+            }
+          }
+          setErrorMessages(backendErrors);
+        } else {
+          setErrorMessages(['Registration failed.']);
+        }
+        return;
+      }
+
+      setSuccessMessage('New user has been added successfully!');
+      setFormData({
+        name: '',
+        username: '',
+        password: '',
+        confirmedPassword: '',
+        email: '',
+      });
+    } catch (error) {
+      setErrorMessages(['Network error. Please try again later.']);
+    }
   };
 
   return (
