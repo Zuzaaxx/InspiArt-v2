@@ -1,38 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import Idea from '../components/Idea';
 
-const MyGalleryPage = ({ projects }) => {
+const MyGalleryPage = () => {
+  const navigate = useNavigate();
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      navigate('/please-login');
+      return;
+    }
+
+    const fetchGalleryItems = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/user-gallery/', {
+          headers: {
+            'Authorization': `Token ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setGalleryItems(data);
+        } else {
+          console.error('Failed to fetch user gallery items');
+        }
+      } catch (error) {
+        console.error('Error fetching user gallery:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGalleryItems();
+  }, [navigate]);
+
+  if (loading) {
+    return (
+      <div className="container">
+        <Navigation />
+        <div className="base-container">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container">
-      <Navigation />
-      <div className="base-container">
+    <div className="w-full min-h-screen bg-gradient-to-b from-[#f9f1e7] to-[#f0d9b5] flex flex-row">
+      <div className="w-72">
+        <Navigation />
+      </div>
+      <div className="flex-1 p-10 flex flex-col items-center">
         <img className="decoration-top" alt="" src="public/img/Vector 3.svg" />
-        <div className="top-leyer">
-          <div className="search-bar">
-            <input placeholder="search idea" />
-          </div>
-          <div className="section">
-            {projects && projects.length > 0 ? (
-              projects.map(project => (
-                <div className="idea" id={project.id} key={project.id}>
-                  <img src={project.image} alt={project.title} />
-                  <div className="idea-text">
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <div className="social-section">
-                      <i className="fas fa-heart"></i>
-                      <i className="fa-solid fa-image"></i>
-                    </div>
-                  </div>
-                </div>
+        <div className="top-layer w-full max-w-6xl">
+          <div className="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+            {galleryItems.length > 0 ? (
+              galleryItems.map(item => (
+                <Idea key={item.id} idea={item} />
               ))
             ) : (
-              <p>No projects found.</p>
+              <p>No gallery items found.</p>
             )}
           </div>
-          <button className="add-idea-button" onClick={() => window.location.href = 'addProject'}>
-            <i className="fa-solid fa-plus"></i>
-          </button>
         </div>
         <img className="decoration-bottom" alt="" src="public/img/Vector 4.svg" />
       </div>

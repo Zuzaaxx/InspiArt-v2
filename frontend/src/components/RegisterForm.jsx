@@ -49,12 +49,12 @@ const RegisterForm = () => {
 
   return (
     <div className="max-w-md mx-auto p-8 bg-white rounded-lg">
-      <div className="flex items-center space-x-2 mb-8">
+      <div className="flex items-center space-x-2 mb-6">
         <span className="text-3xl font-semibold text-orange-600">InspiArt</span>
         <span role="img" aria-label="feather" className="text-2xl">🪶</span>
       </div>
 
-      <p className="text-2xl font-bold mb-6">Join us!</p>
+      <p className="text-2xl font-bold mb-3">Join us!</p>
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

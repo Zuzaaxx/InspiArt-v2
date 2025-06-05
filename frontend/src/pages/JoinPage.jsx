@@ -1,39 +1,38 @@
 import React from 'react';
-import RegisterForm from '../components/RegisterForm';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
+import RegisterForm from '../components/RegisterForm';
 
-const SignUpPage = () => {
+const JoinPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <div className="login-container">
-        <div className="inspiart" style={{ marginTop: 0, paddingTop: 0 }}>
-          <span className="inspiart-text">InspiArt</span>
-          <span role="img" aria-label="feather">🪶</span>
-        </div>
+    <div className="flex min-h-screen bg-gradient-to-b from-[#f9f1e7] to-[#f0d9b5] font-sans relative">
+      <div className="absolute top-4 right-4 flex items-center space-x-2 z-30">
+        <span className="text-lg whitespace-nowrap">Already have an account?</span>
+        <button
+          className="bg-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:bg-orange-700"
+          onClick={() => navigate('/login')}
+        >
+          Log in
+        </button>
+      </div>
+      <div className="w-2/5 flex flex-col justify-center p-12 bg-white shadow-lg relative z-20">
         <RegisterForm />
       </div>
-
-      <div className="base-container">
-        <div className="top-panel">
-          <div className="sign-up-section">
-            <div className="still-dont-have">Already have an account?</div>
-            <button className="sign-up" onClick={() => navigate('/login')}>
-              Log in
-            </button>
-          </div>
-        </div>
-
-        <div className="logo-picture">
-          <img src="/src/assets/logo-bird.png" alt="Logo Bird" />
-        </div>
-
-        <img className="decoration-bottom" alt="" src="/src/assets/Vector 2.svg" />
+      <div className="w-3/5 relative overflow-hidden">
+        <img
+          src="/src/assets/logo-bird.png"
+          alt="Logo Bird"
+          className="absolute bottom-0 right-0 max-h-[90vh] max-w-[65vw] m-8 select-none pointer-events-none"
+        />
+        <img
+          src="/src/assets/Vector 2.svg"
+          alt=""
+          className="absolute bottom-0 left-0 w-full select-none pointer-events-none"
+        />
       </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default JoinPage;
