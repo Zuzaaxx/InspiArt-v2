@@ -42,8 +42,6 @@ const FavouriteIdeasPage = () => {
             })
           );
 
-          console.log('Fetched favourite ideas with details:', ideasWithDetails);
-
           setFavouriteIdeas(ideasWithDetails);
         } else {
           console.error('Failed to fetch favourite ideas');
