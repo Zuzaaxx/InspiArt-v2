@@ -62,7 +62,19 @@ const StartPage = () => {
                         <img src="/src/assets/scribble-art.svg" alt="scribble art" className="mb-2 h-24" />
                         <p className="text-xl text-center">scribble art</p>
                     </div>
-                    <div className="w-3/5 h-36 bg-white/90 p-12 rounded-3xl flex flex-col items-center cursor-pointer" onClick={() => navigate('/random')}>
+                    <div className="w-3/5 h-36 bg-white/90 p-12 rounded-3xl flex flex-col items-center cursor-pointer" onClick={async () => {
+                        try {
+                            const response = await fetch('http://127.0.0.1:8000/api/random_idea/');
+                            if (response.ok) {
+                                const data = await response.json();
+                                navigate(`/idea/${data.id}`, { state: { idea: data } });
+                            } else {
+                                console.error('Failed to fetch random idea');
+                            }
+                        } catch (error) {
+                            console.error('Error fetching random idea:', error);
+                        }
+                    }}>
                         <FaDice className="mb-2 text-black text-8x8" />
                         <p className="text-xl text-center">random</p>
                     </div>
