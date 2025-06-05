@@ -12,6 +12,7 @@ import MyGalleryPage from './pages/MyGalleryPage';
 import MyProfilePage from './pages/MyProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PleaseLoginPage from './pages/PleaseLoginPage';
+import AdvancedPage from './pages/AdvancedPage';
 import './index.css';
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/scribble-art" element={<IdeaPage />} />
         <Route path="/random" element={<IdeaPage />} />
         <Route path="/please-login" element={<PleaseLoginPage />} />
+        <Route path="/advanced" element={<AdvancedPage />} />
         <Route path="/" element={<Navigate to={token ? "/start" : "/login"} replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

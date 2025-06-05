@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaHeart, FaImage, FaUser } from 'react-icons/fa';
+import { FaHome, FaHeart, FaImage, FaUser, FaStar } from 'react-icons/fa';
 
 const Navigation = () => {
     const navigate = useNavigate();
+    const [isStaff, setIsStaff] = useState(false);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                setIsStaff(false);
+                return;
+            }
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/profile/', {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setIsStaff(data.is_staff === true);
+                } else {
+                    setIsStaff(false);
+                }
+            } catch (error) {
+                setIsStaff(false);
+            }
+        };
+        fetchUserProfile();
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
@@ -71,6 +98,21 @@ const Navigation = () => {
                             <p className="ml-8 m-0">My profile</p>
                         </NavLink>
                     </li>
+                    {isStaff && (
+                        <li>
+                            <NavLink
+                                to="/advanced"
+                                className={({ isActive }) =>
+                                    `flex items-center border-b border-[#854E25] pl-0 py-4 w-[90%] no-underline ${
+                                        isActive ? 'text-orange-500 font-bold' : 'text-black'
+                                    }`
+                                }
+                            >
+                                <FaStar />
+                                <p className="ml-8 m-0">Advanced</p>
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
 

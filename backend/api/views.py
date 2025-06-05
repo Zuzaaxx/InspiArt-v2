@@ -231,6 +231,7 @@ def user_profile(request):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "profile_picture": user.profile_picture.url if user.profile_picture else None,
+            "is_staff": user.is_staff,
         }
         return Response(data)
 
